@@ -8,10 +8,10 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: main
+    branch: non-prod
   secretRef:
     name: flux-system
-  url: ssh://git@github.com/heubeck/flux-kind-starter
+  url: ssh://git@github.com/heubeck/cloudland-k8s-config-timoni
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
