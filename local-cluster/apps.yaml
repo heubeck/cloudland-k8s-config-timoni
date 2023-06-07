@@ -14,3 +14,7 @@ spec:
   path: "./apps"
   prune: true
   timeout: 30s
+  postBuild:
+    substitute:
+      gitops_branch: non-prod
+      examiner_version: "~1.11"

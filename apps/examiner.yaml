@@ -1,4 +1,25 @@
 ---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: examiner
+  namespace: apps
+spec:
+  image: quay.io/heubeck/examiner
+  interval: "10m0s"
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: examiner
+  namespace: apps
+spec:
+  imageRepositoryRef:
+    name: examiner
+  policy:
+    semver:
+      range: ${examiner_version}
+---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
@@ -29,4 +50,4 @@ spec:
   images:
     - name: image-repository
       newName: quay.io/heubeck/examiner
-      newTag: 1.11.3
+      newTag: 1.10.1 # {"$imagepolicy": "apps:examiner:tag"}
