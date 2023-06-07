@@ -48,7 +48,7 @@ spec:
     name: examiner
   images:
     - name: quay.io/heubeck/examiner
-      newTag: 1.10.1 # {"$imagepolicy": "apps:examiner:tag"}
+      newTag: 1.11.4 # {"$imagepolicy": "apps:examiner:tag"}
   postBuild:
     substitute:
-      echo_message: "🎢 CloudLand 2023 R0ckX 🎸"
+      echo_message: "\U0001F3A2 CloudLand 2023 R0ckX \U0001F3B8"
