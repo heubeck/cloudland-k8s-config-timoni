@@ -26,3 +26,7 @@ spec:
   sourceRef:
     kind: OCIRepository
     name: examiner
+  images:
+    - name: image-repository
+      newName: quay.io/heubeck/examiner
+      newTag: 1.11.3
