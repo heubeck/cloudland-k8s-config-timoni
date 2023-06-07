@@ -37,7 +37,7 @@ metadata:
   namespace: apps
 spec:
   targetNamespace: apps
-  interval: 5m
+  interval: 1m
   retryInterval: 30s
   timeout: 1m
   path: ./
@@ -47,6 +47,8 @@ spec:
     kind: OCIRepository
     name: examiner
   images:
-    - name: image-repository
-      newName: quay.io/heubeck/examiner
-      newTag: 1.11.4 # {"$imagepolicy": "apps:examiner:tag"}
+    - name: quay.io/heubeck/examiner
+      newTag: 1.10.1 # {"$imagepolicy": "apps:examiner:tag"}
+  postBuild:
+    substitute:
+      echo_message: "🎢 CloudLand 2023 R0ckX 🎸"
