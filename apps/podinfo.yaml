@@ -48,7 +48,7 @@ spec:
     name: podinfo
   images:
     - name: ghcr.io/stefanprodan/podinfo
-      newTag: 6.3.1 # {"$imagepolicy": "apps:podinfo:tag"}
+      newTag: 6.3.6 # {"$imagepolicy": "apps:podinfo:tag"}
   postBuild:
     substitute:
-      echo_message: "🎢 CloudLand 2023 R0ckX hard 🎸"
+      echo_message: "\U0001F3A2 CloudLand 2023 R0ckX hard \U0001F3B8"
