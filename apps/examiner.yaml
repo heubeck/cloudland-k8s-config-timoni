@@ -1,0 +1,28 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: examiner
+  namespace: apps
+spec:
+  interval: 1m
+  url: oci://quay.io/heubeck/timoni-instances/examiner
+  ref:
+    tag: non-prod
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: examiner
+  namespace: apps
+spec:
+  targetNamespace: apps
+  interval: 5m
+  retryInterval: 30s
+  timeout: 1m
+  path: ./
+  prune: true
+  wait: true
+  sourceRef:
+    kind: OCIRepository
+    name: examiner
