@@ -1,0 +1,31 @@
+---
+name: Publish timoni module
+on:
+  push:
+    branches:
+      - modules
+env:
+  timoni_version: '0.8.2'
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Login to quay.io
+        uses: docker/login-action@v2
+        with:
+            registry: quay.io
+            username: ${{ secrets.QUAY_USER }}
+            password: ${{ secrets.QUAY_PASSWORD }}
+
+      - name: Install timoni cli
+        run: |
+            curl -sSLfo timoni.tgz https://github.com/stefanprodan/timoni/releases/download/v${timoni_version}/timoni_${timoni_version}_linux_amd64.tar.gz
+            sudo tar xf timoni.tgz -C /usr/local/bin
+
+      - name: Build and publish timoni module
+        run: |
+            version=$(cat application/version.txt)
+            timoni mod push application oci://quay.io/heubeck/timoni-modules/application -v $version
