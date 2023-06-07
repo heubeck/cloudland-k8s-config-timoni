@@ -18,3 +18,4 @@ spec:
     substitute:
       gitops_branch: non-prod
       examiner_version: "~1.11"
+      podinfo_version: "~6"

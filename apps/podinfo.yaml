@@ -1,0 +1,54 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: podinfo
+  namespace: apps
+spec:
+  image: ghcr.io/stefanprodan/podinfo
+  interval: "10m0s"
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: podinfo
+  namespace: apps
+spec:
+  imageRepositoryRef:
+    name: podinfo
+  policy:
+    semver:
+      range: ${podinfo_version}
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: podinfo
+  namespace: apps
+spec:
+  interval: 1m
+  url: oci://quay.io/heubeck/timoni-instances/podinfo
+  ref:
+    tag: non-prod
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: podinfo
+  namespace: apps
+spec:
+  targetNamespace: apps
+  interval: 1m
+  retryInterval: 30s
+  timeout: 1m
+  path: ./
+  prune: true
+  wait: true
+  sourceRef:
+    kind: OCIRepository
+    name: podinfo
+  images:
+    - name: ghcr.io/stefanprodan/podinfo
+      newTag: 6.3.1 # {"$imagepolicy": "apps:podinfo:tag"}
+  postBuild:
+    substitute:
+      echo_message: "🎢 CloudLand 2023 R0ckX hard 🎸"
